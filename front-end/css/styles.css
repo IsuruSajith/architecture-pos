@@ -1,0 +1,74 @@
+body {
+    min-height: 100vh;
+    display: flex;
+}
+
+.bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+}
+
+nav {
+    position: sticky;
+    align-self: flex-start;
+    top: 0;
+    height: 100vh;
+}
+
+html:not(html[data-bs-theme="dark"]) nav {
+    background-color: #f8f9fa;
+    border-right: 1px solid lightgray;
+}
+
+html[data-bs-theme="dark"] nav{
+    border-right: 1px solid rgb(85, 85, 85);
+}
+
+main {
+    flex-grow: 1;
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin: 8px;
+    border: 6px solid dodgerblue;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: dodgerblue transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#progress-bar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 4px;
+    background-color: dodgerblue;
+    z-index: 9999999;
+}

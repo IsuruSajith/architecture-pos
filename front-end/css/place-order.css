@@ -1,0 +1,74 @@
+main > section:first-child {
+    border-right: 1px solid lightgray;
+}
+
+#tbl-order thead{
+    position: sticky;
+    top: -1px;
+    background-color: white;
+}
+
+#tbl-order thead th:nth-child(2),
+#tbl-order tbody td:nth-child(2) {
+    width: 50px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#tbl-order thead th:nth-child(3),
+#tbl-order tbody td:nth-child(3) {
+    width: 120px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#tbl-order thead th:nth-child(4),
+#tbl-order tbody td:nth-child(4) {
+    width: 130px;
+    text-align: right;
+    vertical-align: middle;
+}
+
+#tbl-order-wrapper {
+    height: 75vh;
+    overflow-y: auto;
+    user-select: none;
+}
+
+#tbl-order tbody {
+    cursor: pointer;
+}
+
+#tbl-order-wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: #dcdcdc;
+}
+
+#tbl-order-wrapper::-webkit-scrollbar-thumb {
+    background: dodgerblue;
+}
+
+#tbl-order tbody .delete:hover {
+    color: red;
+}
+
+#btn-clear-customer.disabled {
+    color: gray;
+}
+
+#btn-clear-customer:not(.disabled):hover {
+    color: red;
+    cursor: pointer;
+}
+
+.out-of-stock {
+    background: #ee610b;
+    color: white;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+#frm-order button {
+    min-width: 130px;
+}

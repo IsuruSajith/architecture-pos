@@ -1,0 +1,30 @@
+#tbl-customers thead tr th:first-child,
+#tbl-customers thead tr td:first-child{
+    width: 70px;
+}
+
+#tbl-customers thead tr th:last-child,
+#tbl-customers thead tr td:last-child{
+    width: 70px;
+}
+
+.contact {
+    max-width: 110px;
+    word-wrap: break-word;
+}
+
+#tbl-customers tbody tr {
+    cursor: pointer;
+}
+
+.actions svg:first-child:hover {
+    fill: green;
+}
+
+.actions svg:last-child:hover {
+    fill: red;
+}
+
+#loader {
+    visibility: hidden;
+}

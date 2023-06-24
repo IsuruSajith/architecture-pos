@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System - Manage Customers</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/animate.css/animate.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/manage-customers.css">
+    <script defer src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script defer src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+    <script defer src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script defer type="module" src="js/main.js"></script>
+    <script defer type="module" src="js/manage-customers.js"></script>
+</head>
+
+<body class="container-xl gx-0 border-end border-start">
+    <nav>
+        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 4.5rem;">
+            <a href="index.html" class="d-block p-3 link-body-emphasis text-decoration-none" title="POS System"
+                data-bs-toggle="tooltip" data-bs-placement="right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32"
+                    class="bi bi-bag-check-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                </svg>
+                <span class="visually-hidden">POS System</span>
+            </a>
+            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link py-3 border-bottom border-top rounded-0" aria-current="page"
+                        title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-house" viewBox="0 0 16 16">
+                            <path
+                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z" />
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="manage-customers.html" class="nav-link active py-3 border-bottom rounded-0"
+                        title="Manage Customers" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                            <path
+                                d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z" />
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="manage-items.html" class="nav-link py-3 border-bottom rounded-0" title="Manage Items"
+                        data-bs-toggle="tooltip" data-bs-placement="right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-diagram-3-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5v-1zm-6 8A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5v-1zm6 0A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5v-1zm6 0a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1z" />
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="place-order.html" class="nav-link py-3 border-bottom rounded-0" title="Place Order"
+                        data-bs-toggle="tooltip" data-bs-placement="right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-cart3" viewBox="0 0 16 16">
+                            <path
+                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="search-orders.html" class="nav-link py-3 border-bottom rounded-0" title="Search Orders"
+                        data-bs-toggle="tooltip" data-bs-placement="right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-search" viewBox="0 0 16 16">
+                            <path
+                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <section class="d-flex justify-content-between border-bottom p-2">
+            <h2 class="m-0 align-self-center">Manage Customers</h2>
+            <button id="btn-new-customer" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#new-customer-modal">New Customer</button>
+        </section>
+        <section class="p-2">
+            <input id="txt-search" class="form-control text-center" type="text" placeholder="Search Customer">
+        </section>
+        <section class="p-2">
+            <table id="tbl-customers" class="table table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th>Name</th>
+                        <th class="d-none d-xl-table-cell">Address</th>
+                        <th class="contact text-center">Contact</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">C001</td>
+                        <td>Kasun Sampath</td>
+                        <td class="d-none d-xl-table-cell">Grace Peries Road, Panadura</td>
+                        <td class="contact text-center">077-1234567</td>
+                        <td>
+                            <div class="actions d-flex gap-3 justify-content-center">
+                                <svg data-bs-toggle="tooltip" data-bs-title="Edit Customer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd"
+                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                                <svg data-bs-toggle="tooltip" data-bs-title="Delete Customer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                    <path
+                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                </svg>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="text-center" colspan="5">No customer records are found!</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+    </main>
+    <!-- Modal -->
+    <div class="modal fade" id="new-customer-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Add New Customer</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <label for="txt-id" class="form-label">Customer ID</label>
+                        <input type="text" class="form-control text-center" id="txt-id" placeholder="Generated ID"
+                            disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="txt-name" class="form-label">Customer Name</label>
+                        <input type="text" class="form-control text-center" id="txt-name" placeholder="Eg. Kasun Sampath">
+                        <div class="invalid-feedback">
+                            Name can't be empty
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="txt-contact" class="form-label">Customer Contact</label>
+                        <input type="text" class="form-control text-center" id="txt-contact" placeholder="Eg. 077-1234567">
+                        <div class="invalid-feedback">
+                            Contact can't be empty
+                        </div>
+                    </div>                     
+                    <div class="mb-3">
+                        <label for="txt-address" class="form-label">Customer Address</label>
+                        <input type="text" class="form-control text-center" id="txt-address" placeholder="Eg. #501/A, Grace Peries Road, Panadura">
+                        <div class="invalid-feedback">
+                            Address can't be empty
+                        </div>
+                    </div>                                         
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div id="loader">
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                    <button id="btn-save" type="button" class="btn btn-primary">Save Customer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+        <div id="liveToast" class="toast" data-bs-autohide="true" data-bs-delay="1000" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <strong class="me-auto"></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+          </div>
+        </div>
+    </div>
+    <div id="progress-bar"></div>
+</body>
+
+</html>

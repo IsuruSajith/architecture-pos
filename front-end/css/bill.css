@@ -1,0 +1,55 @@
+#bill {
+    width: 80mm;
+    background-color: white;
+}
+
+#bill-details *{
+    font-size: 14px !important;
+}
+
+#bill-items table {
+    width: 100%;
+    font-size: 14px;
+}
+
+#bill-items table thead {
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+#bill-items table th:first-child,
+#bill-items table td:first-child{
+    text-align: center;
+    width: 20px;
+    padding: 0 3px;
+}
+
+#bill-items table th:nth-child(3),
+#bill-items table td:nth-child(3){
+    text-align: center;
+    width: 20px;
+    padding: 0 3px;
+}
+
+#bill-items table th:nth-child(4),
+#bill-items table td:nth-child(4){
+    text-align: right;
+    width: 100px;
+    padding: 0 3px;
+}
+
+#bill-items table th:last-child,
+#bill-items table td:last-child{
+    text-align: right;
+    width: 100px;
+    padding: 0 5px;
+}
+
+#bill-items table th:nth-child(2),
+#bill-items table td:nth-child(2){
+    text-align: left;
+}
+
+#bill-items table tbody tr:nth-child(even){
+    border-bottom: 1px dashed lightgray;
+}
