@@ -1,6 +1,5 @@
 package lk.ijse.dep10.pos.dao;
 
-import lk.ijse.dep10.pos.dao.custom.*;
 import lk.ijse.dep10.pos.dao.custom.impl.*;
 
 public class DAOFactory {
@@ -14,8 +13,8 @@ public class DAOFactory {
         return (daoFactory == null) ? (daoFactory = new DAOFactory()) : daoFactory;
     }
 
-    public <T extends SuperDAO> T getDAO(DAOType daoType){
-        switch (daoType){
+    public <T extends SuperDAO> T getDAO(DAOType daoType) {
+        switch (daoType) {
             case CUSTOMER:
                 return (T) new CustomerDAOImpl();
             case ITEM:

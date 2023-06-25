@@ -4,7 +4,6 @@ import lk.ijse.dep10.pos.dao.DAOFactory;
 import lk.ijse.dep10.pos.dao.DAOType;
 import lk.ijse.dep10.pos.dao.custom.CustomerDAO;
 import lk.ijse.dep10.pos.dao.custom.impl.CustomerDAOImpl;
-import lk.ijse.dep10.pos.dao.custom.impl.PostgreSQLCustomerDAO;
 import lk.ijse.dep10.pos.dto.CustomerDTO;
 import lk.ijse.dep10.pos.entity.Customer;
 

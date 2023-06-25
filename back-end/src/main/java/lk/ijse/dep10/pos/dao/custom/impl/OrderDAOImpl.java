@@ -1,73 +1,57 @@
 package lk.ijse.dep10.pos.dao.custom.impl;
 
 import lk.ijse.dep10.pos.dao.custom.OrderDAO;
+import lk.ijse.dep10.pos.dao.util.GeneratedKeyHolder;
+import lk.ijse.dep10.pos.dao.util.JdbcTemplate;
+import lk.ijse.dep10.pos.dao.util.KeyHolder;
 import lk.ijse.dep10.pos.entity.Order;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
+import static lk.ijse.dep10.pos.dao.util.Mappers.ORDER_ROW_MAPPER;
+
 public class OrderDAOImpl implements OrderDAO {
 
-    private Connection connection;
+    private JdbcTemplate jdbcTemplate;
 
     public void setConnection(Connection connection) {
-        this.connection = connection;
+        jdbcTemplate = new JdbcTemplate(connection);
     }
 
     public long count() throws Exception {
-        PreparedStatement stm = connection.prepareStatement("SELECT COUNT(*) FROM `order`");
-        ResultSet rst = stm.executeQuery();
-        rst.next();
-        return rst.getLong(1);
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM `order`", Long.class);
     }
 
     public Order save(Order order) throws Exception {
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO `order` (datetime) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
-        stm.setTimestamp(1, order.getDatetime());
-        stm.executeUpdate();
-        ResultSet generatedKeys = stm.getGeneratedKeys();
-        generatedKeys.next();
-        order.setId(generatedKeys.getInt(1));
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(con -> {
+            PreparedStatement stm = con
+                    .prepareStatement("INSERT INTO `order` (datetime) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+            stm.setTimestamp(1, order.getDatetime());
+            return stm;
+        }, keyHolder);
+        order.setId(keyHolder.getKey().intValue());
         return order;
     }
 
     public void update(Order order) throws Exception {
-        PreparedStatement stm = connection.prepareStatement("UPDATE `order` SET datetime=? WHERE id=?");
-        stm.setTimestamp(1, order.getDatetime());
-        stm.setInt(2, order.getId());
-        stm.executeUpdate();
+        jdbcTemplate.update("UPDATE `order` SET datetime=? WHERE id=?", order.getDatetime(), order.getId());
     }
 
     public void deleteById(Integer orderId) throws Exception {
-        PreparedStatement stm = connection.prepareStatement("DELETE FROM `order` WHERE id=?");
-        stm.setInt(1, orderId);
-        stm.executeUpdate();
+        jdbcTemplate.update("DELETE FROM `order` WHERE id=?", orderId);
     }
 
     public Optional<Order> findById(Integer orderId) throws Exception {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM `order` WHERE id=?");
-        stm.setInt(1, orderId);
-        ResultSet rst = stm.executeQuery();
-        if (rst.next()) {
-            Timestamp datetime = rst.getTimestamp("datetime");
-            Order order = new Order(orderId, datetime);
-            return Optional.of(order);
-        }
-        return Optional.empty();
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT * FROM `order` WHERE id=?", ORDER_ROW_MAPPER, orderId));
     }
 
     public List<Order> findAll() throws Exception {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM `order`");
-        ResultSet rst = stm.executeQuery();
-        List<Order> orderList = new ArrayList<>();
-        while (rst.next()) {
-            int id = rst.getInt("id");
-            Timestamp datetime = rst.getTimestamp("datetime");
-            orderList.add(new Order(id, datetime));
-        }
-        return orderList;
+        return jdbcTemplate.query("SELECT * FROM `order`", ORDER_ROW_MAPPER);
     }
 
     public boolean existsById(Integer orderId) throws Exception {
