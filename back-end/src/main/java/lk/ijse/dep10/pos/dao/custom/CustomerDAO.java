@@ -15,4 +15,6 @@ public interface CustomerDAO extends CrudDAO<Customer, Integer> {
     default boolean existsCustomerByContact(String contact) throws Exception {
         throw new IllegalStateException("Method is yet to be implemented");
     }
+
+    boolean existsCustomerByContactAndNotId(String contact, Integer id) throws Exception;
 }

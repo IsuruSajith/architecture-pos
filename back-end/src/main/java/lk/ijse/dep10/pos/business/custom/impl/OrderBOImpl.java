@@ -77,7 +77,7 @@ public class OrderBOImpl implements OrderBO {
 
                     /* If the item exists, then let's check for the integrity */
                     if (!(item.getDescription().equals(itemDTO.getDescription()) &&
-                            item.getUnitPrice().equals(itemDTO.getUnitPrice())))
+                            item.getUnitPrice().setScale(2).equals(itemDTO.getUnitPrice().setScale(2))))
                         throw new BusinessException(BusinessExceptionType.INTEGRITY_VIOLATION,
                                 "Order failed: Provided item data for Item code:" + itemDTO.getCode() + " does not match");
 

@@ -43,6 +43,9 @@ public class ItemBOImpl implements ItemBO {
         try (Connection connection = dataSource.getConnection()) {
             itemDAO.setConnection(connection);
 
+            if (!itemDAO.existsById(itemDTO.getCode()))
+                throw new BusinessException(BusinessExceptionType.RECORD_NOT_FOUND,
+                        "Update failed: Item code: " + itemDTO.getCode() + " does not exist");
             itemDAO.update(transformer.toItemEntity(itemDTO));
         }
     }
@@ -56,6 +59,9 @@ public class ItemBOImpl implements ItemBO {
             if (orderDetailDAO.existsOrderDetailByItemCode(itemCode)) throw new BusinessException(BusinessExceptionType.INTEGRITY_VIOLATION,
                     "Delete failed: Item code: " + itemCode + " already associated with some orders");
 
+            if (!itemDAO.existsById(itemCode))
+                throw new BusinessException(BusinessExceptionType.RECORD_NOT_FOUND,
+                        "Delete failed: Item code: " + itemCode + " does not exist");
             itemDAO.deleteById(itemCode);
         }
     }

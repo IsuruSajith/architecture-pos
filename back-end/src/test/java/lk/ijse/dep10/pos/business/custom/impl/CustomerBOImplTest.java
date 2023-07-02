@@ -41,9 +41,9 @@ class CustomerBOImplTest {
     }
 
     @CsvSource({
-        "Kasun,Galle,078-1234567",
-        "Nuwan,Matara,077-1234567",
-        "John,Hakmana,032-1234567",
+        "Kasun,Galle,099-1234567",
+        "Nuwan,Matara,088-1234567",
+        "John,Hakmana,066-1234567",
     })
     @ParameterizedTest
     void findCustomerByIdOrContact(String name, String address, String contact) throws Exception {

@@ -25,7 +25,7 @@ public class CustomerWSHandler extends TextWebSocketHandler {
         CustomerBO customerBO = BOFactory.getInstance().getBO(BOType.CUSTOMER, pool);
         try {
             CustomerDTO customer = customerBO
-                    .findCustomerByIdOrContact(message.getPayload().trim());
+                    .findCustomerByIdOrContact(message.getPayload().strip());
             String customerJSON = objectMapper.writeValueAsString(customer);
             session.sendMessage(new TextMessage(customerJSON));
         } catch (BusinessException be) {
