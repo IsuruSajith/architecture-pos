@@ -3,22 +3,25 @@
     'use strict'
     const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipTriggerList.forEach(tooltipTriggerEl => {
-      new bootstrap.Tooltip(tooltipTriggerEl)
+        new bootstrap.Tooltip(tooltipTriggerEl)
     })
-  })();
+})();
 
-export function showProgress(xhr){
-    const progressBar =  $("#progress-bar");
-    xhr.addEventListener('loadstart', ()=> progressBar.width('5%'));
-    xhr.addEventListener('progress', (eventData)=> {
+export const REST_API_BASE_URL = 'http://localhost:8080/pos/api/v1';
+export const WS_API_BASE_URL = 'ws://localhost:8080/pos/api/v1';
+
+export function showProgress(xhr) {
+    const progressBar = $("#progress-bar");
+    xhr.addEventListener('loadstart', () => progressBar.width('5%'));
+    xhr.addEventListener('progress', (eventData) => {
         const downloadedBytes = eventData.loaded;
         const totalBytes = eventData.total;
         const progress = downloadedBytes / totalBytes * 100;
         progressBar.width(`${progress}%`);
     });
-    xhr.addEventListener('loadend', ()=> {
+    xhr.addEventListener('loadend', () => {
         progressBar.width('100%');
-        setTimeout(()=> progressBar.width('0%'), 500);
+        setTimeout(() => progressBar.width('0%'), 500);
     });
 }
 

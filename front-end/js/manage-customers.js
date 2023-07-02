@@ -1,4 +1,4 @@
-import {showProgress, showToast} from "./main.js";
+import {REST_API_BASE_URL, showProgress, showToast} from "./main.js";
 
 const tbodyElm = $("#tbl-customers tbody");
 const modalElm = $("#new-customer-modal");
@@ -14,8 +14,7 @@ function formatCustomerId(id) {
     return `C${id.toString().padStart(3, '0')}`;
 }
 
-[txtName, txtContact, txtAddress].forEach(txtElm =>
-    $(txtElm).addClass('animate__animated'));
+[txtName, txtContact, txtAddress].forEach(txtElm => $(txtElm).addClass('animate__animated'));
 
 btnSave.on('click', () => {
     if (!validateData()) {
@@ -37,17 +36,17 @@ btnSave.on('click', () => {
     const xhr = new XMLHttpRequest();
 
     /* 2. Set an event listener to listen readystatechange */
-    xhr.addEventListener('readystatechange', ()=> {
-        if (xhr.readyState === 4){
+    xhr.addEventListener('readystatechange', () => {
+        if (xhr.readyState === 4) {
             [txtName, txtAddress, txtContact, btnSave].forEach(elm => elm.removeAttr('disabled'));
             $("#loader").css('visibility', 'hidden');
-            if (xhr.status === 201){
+            if (xhr.status === 201) {
                 customer = JSON.parse(xhr.responseText);
                 getCustomers();
                 resetForm(true);
                 txtName.trigger('focus');
                 showToast('success', 'Saved', 'Customer has been saved successfully');
-            }else{
+            } else {
                 const errorObj = JSON.parse(xhr.responseText);
                 showToast('error', 'Failed to save', errorObj.message);
             }
@@ -55,7 +54,7 @@ btnSave.on('click', () => {
     });
 
     /* 3. Let's open the request */
-    xhr.open('POST', 'http://localhost:8080/pos/customers', true);
+    xhr.open('POST', `${REST_API_BASE_URL}/customers`, true);
 
     /* 4. Let's set some request headers */
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -118,12 +117,12 @@ modalElm.on('show.bs.modal', () => {
     setTimeout(() => txtName.trigger('focus'), 500);
 });
 
-function getCustomers(){
+function getCustomers() {
     const xhr = new XMLHttpRequest();
 
-    xhr.addEventListener('readystatechange', ()=> {
-        if (xhr.readyState === 4){
-            if (xhr.status === 200){
+    xhr.addEventListener('readystatechange', () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
                 tbodyElm.empty();
                 const customerList = JSON.parse(xhr.responseText);
                 customerList.forEach(customer => {
@@ -156,12 +155,12 @@ function getCustomers(){
                 });
                 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
                 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-                if (!customerList.length){
+                if (!customerList.length) {
                     $("#tbl-customers tfoot").show();
-                }else {
+                } else {
                     $("#tbl-customers tfoot").hide();
                 }
-            }else{
+            } else {
                 tbodyElm.empty();
                 $("#tbl-customers tfoot").show();
                 showToast('error', 'Failed', 'Failed to fetch customers');
@@ -171,35 +170,34 @@ function getCustomers(){
     });
 
     const searchText = $("#txt-search").val().trim();
-    const query = (searchText) ? `?q=${searchText}`: "";
+    const query = (searchText) ? `?q=${searchText}` : "";
 
-    xhr.open('GET', 'http://localhost:8080/pos/customers' + query, true);
+    xhr.open('GET', `${REST_API_BASE_URL}/customers` + query, true);
 
     const tfoot = $("#tbl-customers tfoot tr td:first-child");
-    xhr.addEventListener('loadstart', ()=> tfoot.text('Please wait!'));
-    xhr.addEventListener('loadend', ()=> tfoot.text('No customer records are found!'));
+    xhr.addEventListener('loadstart', () => tfoot.text('Please wait!'));
+    xhr.addEventListener('loadend', () => tfoot.text('No customer records are found!'));
 
     xhr.send();
 }
 
 getCustomers();
-$("#txt-search").on('input', ()=> getCustomers());
+$("#txt-search").on('input', () => getCustomers());
 
-tbodyElm.on('click', ".delete", (eventData)=> {
+tbodyElm.on('click', ".delete", (eventData) => {
     /* XHR -> jQuery AJAX */
     const id = +$(eventData.target).parents("tr").children("td:first-child").text().replace('C', '');
     const xhr = new XMLHttpRequest();
-    const jqxhr = $.ajax(`http://localhost:8080/pos/customers/${id}`, {
-        method: 'DELETE',
-        xhr: ()=> xhr           // This is a hack to obtain the xhr that is used by jquery
+    const jqxhr = $.ajax(`${REST_API_BASE_URL}/customers/${id}`, {
+        method: 'DELETE', xhr: () => xhr           // This is a hack to obtain the xhr that is used by jquery
     });
     showProgress(xhr);
-    jqxhr.done(()=> {
+    jqxhr.done(() => {
         showToast('success', 'Deleted', 'Customer has been deleted successfully');
         $(eventData.target).tooltip('dispose');
         getCustomers();
     });
-    jqxhr.fail(()=> {
+    jqxhr.fail(() => {
         showToast('error', 'Failed', "Failed to delete the customer, try again!");
     });
 
