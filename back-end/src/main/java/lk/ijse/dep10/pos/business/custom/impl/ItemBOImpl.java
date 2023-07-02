@@ -75,7 +75,7 @@ public class ItemBOImpl implements ItemBO {
         try (Connection connection = dataSource.getConnection()) {
             itemDAO.setConnection(connection);
 
-            return itemDAO.findAll().stream().map(transformer::fromItemEntity).collect(Collectors.toList());
+            return itemDAO.findItems(query).stream().map(transformer::fromItemEntity).collect(Collectors.toList());
         }
     }
 }

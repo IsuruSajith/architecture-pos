@@ -3,6 +3,10 @@ package lk.ijse.dep10.pos.business.exception;
 public class BusinessException extends RuntimeException {
     private final BusinessExceptionType type;
 
+    public BusinessExceptionType getType() {
+        return type;
+    }
+
     public BusinessException(String message) {
         this(BusinessExceptionType.BUSINESS, message);
     }

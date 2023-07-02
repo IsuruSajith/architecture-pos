@@ -1,3 +1,5 @@
+INSERT INTO customer (name, address, contact) VALUES ('Kasun', 'Galle', '078-1234567');
+
 INSERT INTO `order` (datetime) VALUES (NOW());
 INSERT INTO `order` (datetime) VALUES (NOW());
 

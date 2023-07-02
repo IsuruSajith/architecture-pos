@@ -46,4 +46,11 @@ public class ItemDAOImpl implements ItemDAO {
     public boolean existsById(String code) throws Exception {
         return findById(code).isPresent();
     }
+
+    @Override
+    public List<Item> findItems(String query) throws Exception {
+        query = "%" + query + "%";
+        return jdbcTemplate.query("SELECT * FROM item WHERE code LIKE ? OR description LIKE ?",
+                ITEM_ROW_MAPPER, query, query);
+    }
 }

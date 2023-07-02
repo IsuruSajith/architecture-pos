@@ -11,7 +11,7 @@ public interface CustomerBO extends SuperBO {
 
     void updateCustomer(CustomerDTO customerDTO) throws Exception;
 
-    void deleteCustomerByCode(int customerId) throws Exception;
+    void deleteCustomerById(int customerId) throws Exception;
 
     CustomerDTO findCustomerByIdOrContact(String idOrContact) throws Exception;
 

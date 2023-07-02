@@ -10,13 +10,15 @@ import lk.ijse.dep10.pos.dao.custom.*;
 import lk.ijse.dep10.pos.dto.ItemDTO;
 import lk.ijse.dep10.pos.dto.OrderDTO;
 import lk.ijse.dep10.pos.dto.OrderDTO2;
-import lk.ijse.dep10.pos.entity.*;
+import lk.ijse.dep10.pos.entity.Item;
+import lk.ijse.dep10.pos.entity.Order;
+import lk.ijse.dep10.pos.entity.OrderCustomer;
+import lk.ijse.dep10.pos.entity.OrderDetail;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 public class OrderBOImpl implements OrderBO {
 
@@ -26,6 +28,7 @@ public class OrderBOImpl implements OrderBO {
     private final ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     private final CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     private final OrderCustomerDAO orderCustomerDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER_CUSTOMER);
+    private final QueryDAO queryDAO = DAOFactory.getInstance().getDAO(DAOType.QUERY);
     private final Transformer transformer = new Transformer();
 
     public OrderBOImpl(DataSource dataSource) {
@@ -70,18 +73,18 @@ public class OrderBOImpl implements OrderBO {
                     /* Let's find out whether the item exists in the database */
                     Item item = itemDAO.findById(itemDTO.getCode()).orElseThrow(() ->
                             new BusinessException(BusinessExceptionType.RECORD_NOT_FOUND,
-                            "Order failed: Item code: " + itemDTO.getCode() + " does not exist"));
+                                    "Order failed: Item code: " + itemDTO.getCode() + " does not exist"));
 
                     /* If the item exists, then let's check for the integrity */
                     if (!(item.getDescription().equals(itemDTO.getDescription()) &&
-                        item.getUnitPrice().equals(itemDTO.getUnitPrice())))
+                            item.getUnitPrice().equals(itemDTO.getUnitPrice())))
                         throw new BusinessException(BusinessExceptionType.INTEGRITY_VIOLATION,
-                "Order failed: Provided item data for Item code:" + itemDTO.getCode() + " does not match");
+                                "Order failed: Provided item data for Item code:" + itemDTO.getCode() + " does not match");
 
                     /* Okay, then let's find out whether the requested quantity can be satisfied */
                     if (item.getQty() < itemDTO.getQty())
                         throw new BusinessException(BusinessExceptionType.INTEGRITY_VIOLATION,
-                            "Order failed: Insufficient stock for the Item code: " + itemDTO.getQty());
+                                "Order failed: Insufficient stock for the Item code: " + itemDTO.getQty());
 
                     /* If so, let's save the order detail */
                     OrderDetail orderDetailEntity = transformer.toOrderDetailEntity(itemDTO);
@@ -96,7 +99,7 @@ public class OrderBOImpl implements OrderBO {
                 /* If everything goes well, then let's commit */
                 connection.commit();
                 return order.getId();
-            } catch (Throwable t){
+            } catch (Throwable t) {
                 /* If something goes bad in between, let's roll back the transaction */
                 connection.rollback();
 
@@ -113,6 +116,9 @@ public class OrderBOImpl implements OrderBO {
 
     @Override
     public List<OrderDTO2> searchOrders(String query) throws Exception {
-        return null;
+        try (Connection connection = dataSource.getConnection()) {
+            queryDAO.setConnection(connection);
+            return queryDAO.findOrdersByQuery(query);
+        }
     }
 }

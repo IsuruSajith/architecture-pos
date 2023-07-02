@@ -1,9 +1,11 @@
 package lk.ijse.dep10.pos.dao.util;
 
+import lk.ijse.dep10.pos.dto.OrderDTO2;
 import lk.ijse.dep10.pos.entity.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Mappers {
     public static final RowMapper<Customer> CUSTOMER_ROW_MAPPER = ((rs, rowNum) -> {
@@ -40,5 +42,14 @@ public class Mappers {
         BigDecimal unitPrice = rs.getBigDecimal("unit_price");
         int qty = rs.getInt("qty");
         return new OrderDetail(orderId, itemCode, unitPrice, qty);
+    };
+
+    public static final RowMapper<OrderDTO2> ORDER_DTO_2_ROW_MAPPER = (rst, rowNum) -> {
+        String orderId = rst.getString("id");
+        LocalDateTime orderDateTime = rst.getTimestamp("datetime").toLocalDateTime();
+        String customerId = rst.getString("customer_id");
+        String customerName = rst.getString("name");
+        BigDecimal orderTotal = rst.getBigDecimal("total");
+        return new OrderDTO2(orderId, orderDateTime, customerId, customerName, orderTotal);
     };
 }
