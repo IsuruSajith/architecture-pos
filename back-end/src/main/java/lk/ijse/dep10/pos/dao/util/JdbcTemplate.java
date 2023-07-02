@@ -25,7 +25,6 @@ public class JdbcTemplate {
     public <T> T queryForObject(String sql, Class<T> returnClass) throws Exception {
         ResultSet rst = getStatement(sql).executeQuery();
         if (!rst.next()) return null;
-        rst.next();
         return rst.getObject(1, returnClass);
     }
 

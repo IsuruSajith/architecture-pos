@@ -46,4 +46,10 @@ public class OrderCustomerDAOImpl implements OrderCustomerDAO {
     public boolean existsById(Integer orderId) throws Exception {
         return findById(orderId).isPresent();
     }
+
+    @Override
+    public boolean existsOrderByCustomerId(int customerId) throws Exception {
+        return jdbcTemplate.queryForObject("SELECT * FROM order_customer WHERE customer_id = ?",
+                ORDER_CUSTOMER_ROW_MAPPER, customerId) != null;
+    }
 }

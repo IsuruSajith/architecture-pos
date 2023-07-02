@@ -47,4 +47,10 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     public boolean existsById(OrderDetailPK orderDetailPK) throws Exception {
         return findById(orderDetailPK).isPresent();
     }
+
+    @Override
+    public boolean existsOrderDetailByItemCode(String itemCode) throws Exception {
+        return jdbcTemplate.queryForObject("SELECT * FROM order_detail WHERE item_code =?",
+                ORDER_DETAIL_ROW_MAPPER, itemCode) != null;
+    }
 }

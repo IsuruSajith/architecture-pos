@@ -31,9 +31,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     public Customer save(Customer customer) throws Exception {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
-            PreparedStatement stm = con
-                    .prepareStatement("INSERT INTO customer (name, address, contact) VALUES (?, ?, ?)",
-                            Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stm = con.prepareStatement("INSERT INTO customer (name, address, contact) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, customer.getName());
             stm.setString(2, customer.getAddress());
             stm.setString(3, customer.getContact());
@@ -67,5 +65,18 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     public List<Customer> findCustomers(String query) throws Exception {
         return jdbcTemplate.query("SELECT * FROM customer WHERE id LIKE ? OR name LIKE ? OR address LIKE ? OR contact LIKE ?", CUSTOMER_ROW_MAPPER, "%" + query + "%");
+    }
+
+    @Override
+    public boolean existsCustomerByContact(String contact) throws Exception {
+        return jdbcTemplate.queryForObject("SELECT * FROM customer WHERE contact=?",
+                CUSTOMER_ROW_MAPPER, contact) != null;
+    }
+
+    @Override
+    public Optional<Customer> findCustomerByIdOrContact(String idOrContact) throws Exception {
+        return Optional.ofNullable(jdbcTemplate
+                .queryForObject("SELECT * FROM customer WHERE CONCAT(id, '')=? OR contact=?",
+                CUSTOMER_ROW_MAPPER, idOrContact, idOrContact));
     }
 }
