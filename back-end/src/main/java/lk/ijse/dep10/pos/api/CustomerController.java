@@ -1,5 +1,6 @@
 package lk.ijse.dep10.pos.api;
 
+import io.swagger.annotations.*;
 import lk.ijse.dep10.pos.business.BOFactory;
 import lk.ijse.dep10.pos.business.BOType;
 import lk.ijse.dep10.pos.business.custom.CustomerBO;
@@ -17,20 +18,30 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("api/v1/customers")
 @CrossOrigin
+@Api("Customer Controller REST API")
 public class CustomerController {
 
     @Autowired
     private BasicDataSource pool;
 
+    @ApiOperation(value = "Save Customer",
+        notes = "Save a customer with JSON request body")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "New Customer has been created"),
+            @ApiResponse(code = 400, message = "Customer details are invalid")
+    })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public CustomerDTO saveCustomer(@RequestBody @Valid CustomerDTO customer) throws Exception {
+    public CustomerDTO saveCustomer(@RequestBody @Valid
+                                        @ApiParam(name = "customer", value = "Customer JSON")
+                                        CustomerDTO customer) throws Exception {
         CustomerBO customerBO = BOFactory.getInstance().getBO(BOType.CUSTOMER, pool);
         return customerBO.saveCustomer(customer);
     }
 
+    @ApiOperation(value = "Update Customer")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{customerId}")
     public void updateCustomer(@PathVariable("customerId") Integer customerId,
@@ -40,6 +51,7 @@ public class CustomerController {
         customerBO.updateCustomer(customer);
     }
 
+    @ApiOperation(value = "Delete Customer")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{customerId}")
     public void deleteCustomer(@PathVariable("customerId") Integer customerId) throws Exception {
@@ -47,6 +59,7 @@ public class CustomerController {
         customerBO.deleteCustomerById(customerId);
     }
 
+    @ApiOperation(value = "Get Customers")
     @GetMapping
     public List<CustomerDTO> getCustomers(@RequestParam(value = "q", required = false)
                                           String query) throws Exception {
